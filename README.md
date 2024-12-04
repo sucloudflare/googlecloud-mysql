@@ -1,6 +1,7 @@
 
 <h1>Guia de Configuração no Google Cloud e MySQL Workbench</h1
-<a href='https://googlecloud-mysql-c3df.vercel.app/'>click aqui pra o site do projeto</a>
+<br>
+<a href='https://googlecloud-mysql-c3df.vercel.app/'>click aqui pra ver o site do projeto</a>
 <p>Este guia descreve como configurar um bucket no Google Cloud Storage, criar uma rede VPC, configurar uma instância MySQL e conectá-la ao MySQL Workbench.</p>
 
 <hr>
