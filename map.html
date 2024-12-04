@@ -6,16 +6,19 @@
     <title>Mapa de Serviços do Google Cloud</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #4caf50, #8bc34a); /* Fundo de gradiente verde */
-            flex-direction: column;
-            padding: 0 40px;
-        }
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: url(./q.jpg) no-repeat center center;
+    background-size: cover;  /* Faz a imagem cobrir toda a tela */
+    background-attachment: fixed;  /* A imagem de fundo ficará fixa ao rolar a página */
+    flex-direction: column;
+    padding: 0 40px;
+}
+
 
         .map-container {
             display: flex;
@@ -46,8 +49,25 @@
             cursor: pointer;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            font-size: 12px; /* Ajustando o tamanho da fonte para caber melhor */
-            overflow: hidden; /* Garantir que o texto não ultrapasse os limites */
+            font-size: 12px;
+            overflow: hidden;
+        }
+
+        .service-box1 {
+            width: 60px;
+            height: 50px;
+            background-color: #4285f4;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            margin: 10px;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            font-size: 12px;
+            overflow: hidden;
         }
 
         .service-box:hover {
@@ -84,10 +104,9 @@
             font-size: 14px;
             text-align: left;
             opacity: 0;
-            animation: fadeIn 0.5s forwards; /* Efeito de fade-in ao abrir */
+            animation: fadeIn 0.5s forwards;
         }
 
-        /* Animação de fade-in */
         @keyframes fadeIn {
             0% {
                 opacity: 0;
@@ -119,7 +138,6 @@
             animation: slideIn 0.3s ease-out;
         }
 
-        /* Animação de slide-in para listas */
         @keyframes slideIn {
             0% {
                 transform: translateX(-20px);
@@ -136,7 +154,7 @@
         }
 
         .list-item.active {
-            color: #34a853; /* Muda a cor do item da lista quando ativo */
+            color: #34a853;
         }
 
     </style>
@@ -144,7 +162,7 @@
 <body>
     <!-- Música de fundo -->
     <audio autoplay loop>
-        <source src="sua-musica.mp3" type="audio/mp3">
+        <source src="./music.mp3" type="audio/mp3">
         Seu navegador não suporta a tag de áudio.
     </audio>
 
@@ -217,7 +235,7 @@
 
         <!-- MySQL Workbench -->
         <div class="flex-row">
-            <div class="service-box" onclick="toggleInfo('workbench-info')">
+            <div class="service-box1" onclick="toggleInfo('workbench-info')">
                 Workbench
             </div>
             <div class="arrow"></div>
@@ -239,18 +257,16 @@
     </div>
 
     <script>
-        // Função para alternar a exibição da descrição dos serviços
         function toggleInfo(id) {
             const infoBox = document.getElementById(id);
             infoBox.classList.toggle('active');
         }
 
-        // Função para alternar a exibição de mais listas
         function toggleList(id) {
             const listContent = document.getElementById(id);
-            const listItem = document.querySelector(`#${id}`).previousElementSibling; // Identifica o item de lista anterior
+            const listItem = document.querySelector(`#${id}`).previousElementSibling;
             listItem.classList.toggle('active');
-            listContent.classList.toggle('active'); // Adicionando a classe 'active' para mostrar/ocultar as informações
+            listContent.classList.toggle('active');
         }
     </script>
 </body>
