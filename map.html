@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Serviços do Google Cloud</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #4caf50, #8bc34a); /* Fundo de gradiente verde */
+            flex-direction: column;
+            padding: 0 40px;
+        }
+
+        .map-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .service-box {
+            width: 50px;
+            height: 50px;
+            background-color: #4285f4;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            margin: 5px;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            font-size: 12px; /* Ajustando o tamanho da fonte para caber melhor */
+            overflow: hidden; /* Garantir que o texto não ultrapasse os limites */
+        }
+
+        .service-box:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-description {
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .arrow {
+            width: 2px;
+            height: 20px;
+            background-color: #4285f4;
+            margin-top: -2px;
+        }
+
+        .arrow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-box {
+            display: none;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 300px;
+            font-size: 14px;
+            text-align: left;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards; /* Efeito de fade-in ao abrir */
+        }
+
+        /* Animação de fade-in */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .info-box.active {
+            display: block;
+        }
+
+        .list-item {
+            margin: 5px 0;
+            cursor: pointer;
+            color: #4285f4;
+            transition: color 0.3s ease;
+        }
+
+        .list-item:hover {
+            color: #34a853;
+            text-decoration: underline;
+        }
+
+        .list-content {
+            display: none;
+            margin-left: 20px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        /* Animação de slide-in para listas */
+        @keyframes slideIn {
+            0% {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .list-item.active + .list-content {
+            display: block;
+        }
+
+        .list-item.active {
+            color: #34a853; /* Muda a cor do item da lista quando ativo */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Música de fundo -->
+    <audio autoplay loop>
+        <source src="sua-musica.mp3" type="audio/mp3">
+        Seu navegador não suporta a tag de áudio.
+    </audio>
+
+    <div class="map-container">
+        <!-- Google Cloud Storage -->
+        <div class="flex-row">
+            <div class="service-box" onclick="toggleInfo('gcs-info')">
+                GCS
+            </div>
+            <div class="arrow"></div>
+            <div class="service-description">
+                Criar Bucket<br>Armazenamento
+            </div>
+        </div>
+        <div class="info-box" id="gcs-info">
+            <p><strong>Google Cloud Storage</strong>: Serviço de armazenamento de objetos.</p>
+            <ul>
+                <li class="list-item" onclick="toggleList('gcs-list')">Ver mais sobre Buckets</li>
+                <div class="list-content" id="gcs-list">
+                    <p>- Armazenar dados de forma segura</p>
+                    <p>- Gerenciar o controle de acesso e a versão de objetos</p>
+                    <p>- Ideal para backups e arquivos grandes</p>
+                </div>
+            </ul>
+        </div>
+
+        <!-- VPC Network -->
+        <div class="flex-row">
+            <div class="service-box" onclick="toggleInfo('vpc-info')">
+                VPC
+            </div>
+            <div class="arrow"></div>
+            <div class="service-description">
+                Criar Rede VPC<br>Conexão IP
+            </div>
+        </div>
+        <div class="info-box" id="vpc-info">
+            <p><strong>VPC</strong>: Rede Virtual Privada no Google Cloud.</p>
+            <ul>
+                <li class="list-item" onclick="toggleList('vpc-list')">Ver mais sobre VPC</li>
+                <div class="list-content" id="vpc-list">
+                    <p>- Criação de sub-redes privadas e públicas</p>
+                    <p>- Definir políticas de firewall</p>
+                    <p>- Gerenciar o tráfego entre redes internas e externas</p>
+                </div>
+            </ul>
+        </div>
+
+        <!-- SQL Instances (MySQL) -->
+        <div class="flex-row">
+            <div class="service-box" onclick="toggleInfo('sql-info')">
+                SQL
+            </div>
+            <div class="arrow"></div>
+            <div class="service-description">
+                Criar Instância MySQL<br>Banco de Dados
+            </div>
+        </div>
+        <div class="info-box" id="sql-info">
+            <p><strong>MySQL</strong>: Serviço de banco de dados SQL gerenciado.</p>
+            <ul>
+                <li class="list-item" onclick="toggleList('sql-list')">Ver mais sobre MySQL</li>
+                <div class="list-content" id="sql-list">
+                    <p>- Criação e gerenciamento de instâncias de banco de dados</p>
+                    <p>- Suporta backup e recuperação automáticos</p>
+                    <p>- Escalabilidade e segurança integradas</p>
+                </div>
+            </ul>
+        </div>
+
+        <!-- MySQL Workbench -->
+        <div class="flex-row">
+            <div class="service-box" onclick="toggleInfo('workbench-info')">
+                Workbench
+            </div>
+            <div class="arrow"></div>
+            <div class="service-description">
+                Conectar MySQL<br>Ferramenta de Conexão
+            </div>
+        </div>
+        <div class="info-box" id="workbench-info">
+            <p><strong>MySQL Workbench</strong>: Ferramenta para gerenciamento de bancos de dados MySQL.</p>
+            <ul>
+                <li class="list-item" onclick="toggleList('workbench-list')">Ver mais sobre Workbench</li>
+                <div class="list-content" id="workbench-list">
+                    <p>- Conectar a instâncias de MySQL</p>
+                    <p>- Realizar consultas SQL e administração de banco de dados</p>
+                    <p>- Suporte a modelagem de dados e backups</p>
+                </div>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Função para alternar a exibição da descrição dos serviços
+        function toggleInfo(id) {
+            const infoBox = document.getElementById(id);
+            infoBox.classList.toggle('active');
+        }
+
+        // Função para alternar a exibição de mais listas
+        function toggleList(id) {
+            const listContent = document.getElementById(id);
+            const listItem = document.querySelector(`#${id}`).previousElementSibling; // Identifica o item de lista anterior
+            listItem.classList.toggle('active');
+            listContent.classList.toggle('active'); // Adicionando a classe 'active' para mostrar/ocultar as informações
+        }
+    </script>
+</body>
+</html>
